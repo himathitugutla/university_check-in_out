@@ -7,21 +7,19 @@ class Student:
         self.checked_in = False
         self.history = []
 
-    def check_in(self, method):
+    def check_in(self, method, check_in_time):
         if not self.checked_in:
-            now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             self.checked_in = True
-            self.history.append({"check-in": now, "method": method})
-            print(f"{self.name} checked in at {now} using {method}.")
+            self.history.append({"check-in": check_in_time, "method": method})
+            print(f"{self.name} checked in at {check_in_time} using {method}.")
         else:
             print(f"{self.name} is already checked in.")
 
-    def check_out(self):
+    def check_out(self, check_out_time):
         if self.checked_in:
-            now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             self.checked_in = False
-            self.history[-1]["check-out"] = now
-            print(f"{self.name} checked out at {now}.")
+            self.history[-1]["check-out"] = check_out_time
+            print(f"{self.name} checked out at {check_out_time}.")
         else:
             print(f"{self.name} is not checked in.")
 
@@ -30,3 +28,33 @@ class Student:
         for record in self.history:
             print(record)
 
+# Manual Input for Student Information
+student_id = input("Enter Student ID: ")
+student_name = input("Enter Student Name: ")
+
+# Create Student Object
+student = Student(student_id, student_name)
+
+while True:
+    print("\nOptions:")
+    print("1. Check-In")
+    print("2. Check-Out")
+    print("3. View Attendance History")
+    print("4. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        method = input("Enter check-in method (QR Code, Manual Entry, etc.): ")
+        check_in_time = input("Enter check-in time (YYYY-MM-DD HH:MM:SS): ")
+        student.check_in(method, check_in_time)
+    elif choice == "2":
+        check_out_time = input("Enter check-out time (YYYY-MM-DD HH:MM:SS): ")
+        student.check_out(check_out_time)
+    elif choice == "3":
+        student.view_attendance()
+    elif choice == "4":
+        print("Exiting program...")
+        break
+    else:
+        print("Invalid choice, please try again!")
