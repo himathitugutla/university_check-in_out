@@ -1,0 +1,32 @@
+import datetime
+
+class Student:
+    def _init_(self, student_id, name):
+        self.student_id = student_id
+        self.name = name
+        self.checked_in = False
+        self.history = []
+
+    def check_in(self, method):
+        if not self.checked_in:
+            now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self.checked_in = True
+            self.history.append({"check-in": now, "method": method})
+            print(f"{self.name} checked in at {now} using {method}.")
+        else:
+            print(f"{self.name} is already checked in.")
+
+    def check_out(self):
+        if self.checked_in:
+            now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self.checked_in = False
+            self.history[-1]["check-out"] = now
+            print(f"{self.name} checked out at {now}.")
+        else:
+            print(f"{self.name} is not checked in.")
+
+    def view_attendance(self):
+        print(f"\nAttendance history for {self.name}:")
+        for record in self.history:
+            print(record)
+
